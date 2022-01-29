@@ -10,17 +10,17 @@ import (
 	_ "golang.org/x/image/bmp"
 )
 
-func fill(in io.Reader, out *bytes.Buffer) {
+func fill(in io.Reader, out *bytes.Buffer) (rect image.Rectangle) {
 
 	im, _, err := image.Decode(in)
 	if err != nil {
 		return
 	}
 
-	rect := im.Bounds()
+	rect = im.Bounds()
 
-	for y := rect.Min.Y; y <= rect.Max.Y; y += 2 {
-		for x := rect.Min.X; x <= rect.Max.X; x++ {
+	for y := rect.Min.Y; y < rect.Max.Y; y += 2 {
+		for x := rect.Min.X; x < rect.Max.X; x++ {
 			br, bg, bb, _ := im.At(x, y).RGBA()
 			fr, fg, fb, _ := im.At(x, y+1).RGBA()
 			fmt.Fprintf(out, colorHead, uint8(fr), uint8(fg), uint8(fb), uint8(br), uint8(bg), uint8(bb))
@@ -28,4 +28,6 @@ func fill(in io.Reader, out *bytes.Buffer) {
 		out.WriteString(colorEnd)
 		out.WriteByte('\n')
 	}
+
+	return
 }

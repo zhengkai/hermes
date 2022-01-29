@@ -1,6 +1,7 @@
 package zj
 
 import (
+	"io"
 	"path/filepath"
 	"project/config"
 
@@ -17,7 +18,7 @@ func init() {
 	mainCfg.AddOutput(mainFile)
 
 	infoCfg := mainCfg.Clone()
-	infoCfg.AddOutput(infoFile)
+	infoCfg.Output = []io.Writer{infoFile}
 	infoCfg.Color = zog.ColorInfo
 	infoCfg.LinePrefix = `[IO] `
 

@@ -61,9 +61,12 @@ func movieFrame(file string, t time.Duration) (err error) {
 	}
 
 	var out bytes.Buffer
-	fill(&pic, &out)
+	rect := fill(&pic, &out)
 
-	os.Stdout.Write([]byte("\033[35F"))
+	h := (rect.Max.Y + 1) / 2
+	// zj.IO(rect, h)
+
+	os.Stdout.Write([]byte(fmt.Sprintf("\033[%dF", h)))
 	out.WriteTo(os.Stdout)
 	// write(`/tmp/4.txt`, &out)
 	return
