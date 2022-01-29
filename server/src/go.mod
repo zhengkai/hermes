@@ -10,4 +10,7 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 )
 
-require github.com/gorilla/websocket v1.4.2 // indirect
+require (
+	github.com/gorilla/websocket v1.4.2 // indirect
+	golang.org/x/image v0.0.0-20211028202545-6944b10bf410 // indirect
+)

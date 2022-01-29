@@ -1,36 +1,20 @@
 package project
 
 import (
-	"project/build"
 	"project/config"
-	"project/db"
-	"project/pb"
-	"project/zj"
-
-	"github.com/zhengkai/zu"
+	"project/img"
 )
 
 // Start ...
 func Start() {
-
-	build.DumpBuildInfo()
-
-	zj.J(zu.JSON(&pb.Demo{
-		ID:   43,
-		Name: `rpg`,
-	}))
-
-	db.WaitConn(config.MySQL)
-
-	select {}
+	// img.Read(`/tmp/1.bmp`)
+	img.Movie(`/share/4.mp4`)
 }
 
 // Prod ...
 func Prod() {
 
 	config.Prod = true
-
-	zj.J(`prod start`)
 
 	Start()
 }
