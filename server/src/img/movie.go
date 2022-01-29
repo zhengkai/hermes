@@ -22,7 +22,7 @@ func Movie(file string) (err error) {
 			break
 		}
 
-		movieFrame(file, d+time.Second*10)
+		movieFrame(file, d+time.Second*15)
 		time.Sleep(time.Second / 20)
 	}
 
@@ -35,7 +35,7 @@ func movieFrame(file string, t time.Duration) (err error) {
 	s := fmt.Sprintf(`%.03f`, ft/1000)
 
 	cmd := exec.Command(
-		`/usr/bin/ffmpeg`,
+		`ffmpeg`,
 		`-ss`,
 		s,
 		`-i`,
@@ -63,7 +63,7 @@ func movieFrame(file string, t time.Duration) (err error) {
 	var out bytes.Buffer
 	fill(&pic, &out)
 
-	os.Stdout.Write([]byte("\033[2J"))
+	os.Stdout.Write([]byte("\033[35F"))
 	out.WriteTo(os.Stdout)
 	// write(`/tmp/4.txt`, &out)
 	return
