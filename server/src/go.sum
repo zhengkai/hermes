@@ -1,0 +1,12 @@
+github.com/arl/statsviz v0.4.0 h1:pv8DWfti0TC8M2Baold2xGnCnir9jhqv1BO6UNKQmqY=
+github.com/arl/statsviz v0.4.0/go.mod h1:+5inUy/dxy11x/KSmicG3ZrEEy0Yr81AFm3dn4QC04M=
+github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
+github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
+github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
+github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/zhengkai/zog v1.0.0 h1:CoyCmKFKltwNyj2Dm2//2LEN6yd/ldPYc86s3YyQdCY=
+github.com/zhengkai/zog v1.0.0/go.mod h1:dXbJ0XDMRXQX+XeNuIM9hJy/6OLRNtXHPq/86ll8u6I=
+github.com/zhengkai/zu v1.0.11 h1:mxvMszJfax81Zzyk/v3LNbBJolRTUsdfq5EPfed5B6c=
+github.com/zhengkai/zu v1.0.11/go.mod h1:JWXGfd+7xrc4gAt65qWco7WtmLqD7CF1TTZxfm+OxgM=
+google.golang.org/protobuf v1.27.1 h1:SnqbnDw1V7RiZcXPx5MEeqPv2s79L9i7BJUlG/+RurQ=
+google.golang.org/protobuf v1.27.1/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
