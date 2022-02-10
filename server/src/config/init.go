@@ -10,8 +10,8 @@ func init() {
 	Dir, _ = filepath.Abs(filepath.Dir(os.Args[0]))
 
 	list := map[string]*string{
-		`HERMES_MYSQL`: &MySQL,
-		`STATIC_DIR`:    &StaticDir,
+		`HERMES_PORT`: &Port,
+		`STATIC_DIR`:  &StaticDir,
 	}
 	for k, v := range list {
 		s := os.Getenv(k)

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"project/config"
 	"time"
 )
 
@@ -61,7 +62,7 @@ func (s *Stream) frame() {
 
 	// msg := fmt.Sprintf("%s %d\n", now, f)
 
-	filename := fmt.Sprintf(`/www/hermes/static/bf/%05d.bmp`, f)
+	filename := fmt.Sprintf(`%s/bf/%05d.bmp`, config.StaticDir, f)
 	file, err := os.Open(filename)
 	if err != nil {
 		s.stop = true

@@ -1,6 +1,7 @@
 package zj
 
 import (
+	"fmt"
 	"io"
 	"path/filepath"
 	"project/config"
@@ -10,10 +11,12 @@ import (
 
 func init() {
 
-	mainFile, _ := zog.NewFile(config.Dir+`/log/default.txt`, false)
-	infoFile, _ := zog.NewFile(config.Dir+`/log/io.txt`, false)
-	errFile, _ := zog.NewFile(config.Dir+`/log/err.txt`, true)
-	accessFile, _ := zog.NewFile(config.Dir+`/log/access.txt`, true)
+	fmt.Println(config.StaticDir + `/log/access.txt`)
+
+	mainFile, _ := zog.NewFile(config.StaticDir+`/log/default.txt`, false)
+	infoFile, _ := zog.NewFile(config.StaticDir+`/log/io.txt`, false)
+	errFile, _ := zog.NewFile(config.StaticDir+`/log/err.txt`, true)
+	accessFile, _ := zog.NewFile(config.StaticDir+`/log/access.txt`, true)
 
 	accessCfg := zog.NewConfig()
 	accessCfg.Caller = zog.CallerNone

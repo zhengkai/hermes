@@ -21,8 +21,9 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/
 COPY --from=builder /project/server/dist/prod/hermes-server-next /hermes-server
 
-RUN apk add --no-cache gzip brotli
-
 ENV TZ=Asia/Shanghai
+ENV STATIC_DIR="/static"
+
+EXPOSE 30023
 
 CMD ["/hermes-server"]

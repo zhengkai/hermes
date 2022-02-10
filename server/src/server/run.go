@@ -2,13 +2,14 @@ package server
 
 import (
 	"net"
+	"project/config"
 	"project/zj"
 )
 
 // Run ...
 func Run() {
 
-	ln, err := net.Listen(`tcp`, `:23`)
+	ln, err := net.Listen(`tcp`, config.Port)
 	if err != nil {
 		zj.W(`listen start fail:`, err)
 		return

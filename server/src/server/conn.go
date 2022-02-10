@@ -2,6 +2,7 @@ package server
 
 import (
 	"bytes"
+	"fmt"
 	"net"
 	"project/img"
 	"project/zj"
@@ -20,22 +21,23 @@ func handleConnection(c net.Conn) {
 
 	s := img.NewStream()
 
+	var in, out, inCount, outCount int
 	go func() {
-		connWrite(c, s)
+		out, outCount = connWrite(c, s)
 		wg.Done()
 	}()
 	go func() {
-		connRead(c, s)
+		in, inCount = connRead(c, s)
 		wg.Done()
 	}()
 
 	wg.Wait()
 	t := time.Now().Sub(start)
 	t -= t % time.Millisecond
-	zj.Access(c.RemoteAddr().String(), t)
+	zj.Access(fmt.Sprintf(`%21s %10s %8d %10d %8d %8d`, c.RemoteAddr().String(), t, in, out, inCount, outCount))
 }
 
-func connWrite(c net.Conn, s *img.Stream) {
+func connWrite(c net.Conn, s *img.Stream) (size, count int) {
 
 	for {
 
@@ -44,31 +46,34 @@ func connWrite(c net.Conn, s *img.Stream) {
 			break
 		}
 
-		_, err := c.Write(ab)
+		n, err := c.Write(ab)
+		size += n
+		count++
 		if err != nil {
 			break
 		}
 	}
 
-	zj.J(`read`)
-
 	c.Close()
+	return
 }
 
-func connRead(c net.Conn, s *img.Stream) {
+func connRead(c net.Conn, s *img.Stream) (size, count int) {
 
 	ab := make([]byte, 1024)
 
 	for {
 		n, err := c.Read(ab)
+		size += n
+		count++
 		if err != nil {
 			break
 		}
-		if n == 5 && bytes.Compare(ab[:n], ctrlC) == 0 {
+		if bytes.Contains(ab[:n], ctrlC) {
 			break
 		}
 	}
-	zj.J(`write`)
 
 	c.Close()
+	return
 }

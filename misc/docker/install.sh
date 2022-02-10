@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET="Freya"
+TARGET="Jack"
 
 if [ "$HOSTNAME" != "$TARGET" ]; then
 	>&2 echo only run in server "$TARGET"
@@ -14,11 +14,7 @@ sudo docker rmi hermes
 sudo cat /tmp/docker-hermes.tar | sudo docker load
 
 sudo docker run -d --name hermes \
-	--env "TANK_MYSQL=hermes:hermes@tcp(172.17.0.1:3306)/hermes" \
-	--env "STATIC_DIR=/tmp" \
-	--env "OUTPUT_PATH=/output" \
-	--mount type=bind,source=/www/hermes/output,target=/output \
-	--mount type=bind,source=/www/hermes/log,target=/log \
-	--mount type=bind,source=/www/hermes/static,target=/tmp \
+	--mount type=bind,source=/www/hermes/static,target=/static \
 	--restart always \
+	-p 0.0.0.0:23:30023 \
 	hermes

@@ -6,5 +6,6 @@ var (
 	Dir  string
 
 	MySQL     = `user:pass@/dbname`
-	StaticDir = `/tmp`
+	Port      = `:30023`
+	StaticDir = `/www/hermes/static`
 )
