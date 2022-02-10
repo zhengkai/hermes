@@ -13,6 +13,12 @@ func init() {
 	mainFile, _ := zog.NewFile(config.Dir+`/log/default.txt`, false)
 	infoFile, _ := zog.NewFile(config.Dir+`/log/io.txt`, false)
 	errFile, _ := zog.NewFile(config.Dir+`/log/err.txt`, true)
+	accessFile, _ := zog.NewFile(config.Dir+`/log/access.txt`, true)
+
+	accessCfg := zog.NewConfig()
+	accessCfg.Caller = zog.CallerNone
+	accessCfg.Output = []io.Writer{accessFile}
+	accessLog.CDefault = accessCfg
 
 	mainCfg := zog.NewConfig()
 	mainCfg.AddOutput(mainFile)
