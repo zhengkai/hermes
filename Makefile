@@ -2,6 +2,11 @@ SHELL:=/bin/bash
 
 -include ./server/build/config.ini
 
+play:
+	./server/build/build-server.sh $(type)
+	/www/hermes/server/dist/dev/hermes-server-next -s 80x50 /www/hermes/static/forza5.mp4 
+	# /www/hermes/server/dist/dev/hermes-server-next /www/hermes/static/1489962262890565646.mp4
+
 start:
 	# ./server/build/build-server.sh $(type)
 	# /www/hermes/server/dist/dev/hermes-server-next

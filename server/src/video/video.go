@@ -2,8 +2,8 @@ package video
 
 import (
 	"bytes"
+	"fmt"
 	"os/exec"
-	"project/zj"
 	"time"
 )
 
@@ -12,7 +12,6 @@ type Video struct {
 	cmd         *exec.Cmd
 	ch          chan *Frame
 	stdin       bytes.Buffer
-	nextTime    time.Time
 	interval    time.Duration
 	frameSerial int
 	skip        int
@@ -24,23 +23,12 @@ func (v *Video) Write(p []byte) (n int, err error) {
 	n = len(p)
 	// zj.J(`write`, v.frameSerial, len(p), v.interval)
 
-	now := time.Now()
-	if v.frameSerial == 0 {
-		v.nextTime = now
-	} else {
-		diff := v.nextTime.Sub(now)
-		// zj.J(`write diff`, diff, now.Format(`15:04:05.000`), v.nextTime.Format(`15:04:05.000`))
-		if diff > 0 {
-			time.Sleep(diff)
-		}
-	}
-
 	f := &Frame{
 		Serial: v.frameSerial,
 		Data:   p,
+		Skip:   v.skip,
 	}
 	v.frameSerial++
-	v.nextTime = v.nextTime.Add(v.interval)
 
 	select {
 	case v.ch <- f:
@@ -51,16 +39,16 @@ func (v *Video) Write(p []byte) (n int, err error) {
 	return
 }
 
-func (v *Video) exec(file string) {
+func (v *Video) exec(file string, width, height int) {
 
 	cmd := exec.Command(
 		`ffmpeg`,
 		`-i`,
 		file,
-		`-vframes`,
-		`20`,
+		// `-vframes`, // 只生成前 n 帧，开发用
+		// `10`,
 		`-vf`,
-		`scale=w=120:h=80:force_original_aspect_ratio=decrease,realtime`,
+		fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height),
 		`-vcodec`,
 		`bmp`,
 		`-f`,
@@ -86,6 +74,5 @@ func (v *Video) exec(file string) {
 // Frame ...
 func (v *Video) Frame() (f *Frame, ok bool) {
 	f, ok = <-v.ch
-	zj.J(`skip`, v.skip)
 	return
 }

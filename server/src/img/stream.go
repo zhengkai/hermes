@@ -71,7 +71,7 @@ func (s *Stream) frame() {
 	defer file.Close()
 
 	var out bytes.Buffer
-	rect := fill(file, &out)
+	rect := Fill(file, &out)
 	h := (rect.Max.Y - 1) / 2
 	fmt.Fprintf(&out, "\033[%dF", h)
 

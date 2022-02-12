@@ -1,7 +1,6 @@
 package img
 
 import (
-	"bytes"
 	"fmt"
 	"image"
 	"image/color"
@@ -11,7 +10,8 @@ import (
 	_ "golang.org/x/image/bmp"
 )
 
-func fill(in io.Reader, out *bytes.Buffer) (rect image.Rectangle) {
+// Fill bmp binary to ansi color code
+func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 
 	im, _, err := image.Decode(in)
 	if err != nil {
@@ -34,13 +34,13 @@ func fill(in io.Reader, out *bytes.Buffer) (rect image.Rectangle) {
 
 				if f == b {
 					skipOne++
-					out.WriteString(` `)
+					out.Write(colorSpace)
 					continue
 				}
 
 				if prevF == f {
 					skip++
-					out.WriteString(`▄`)
+					out.Write(colorDot)
 					continue
 				}
 
@@ -69,10 +69,10 @@ func fill(in io.Reader, out *bytes.Buffer) (rect image.Rectangle) {
 			prevF = f
 		}
 		if y+2 < rect.Max.Y {
-			out.WriteByte('\n')
+			out.Write(colorBR)
 		}
 	}
-	out.WriteString(colorEnd)
+	out.Write(colorEnd)
 
 	// zj.IOF(`skip %5d %5d %5d %5d`, skip, skipB, skipF, skipOne)
 

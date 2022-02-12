@@ -4,4 +4,5 @@ package video
 type Frame struct {
 	Serial int
 	Data   []byte
+	Skip   int
 }
