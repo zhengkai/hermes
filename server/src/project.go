@@ -1,14 +1,23 @@
 package project
 
 import (
+	"project/cli"
 	"project/config"
-	"project/server"
+	"project/zj"
+	"time"
 )
 
 // Start ...
 func Start() {
 
-	server.Run()
+	cli.Run()
+
+	zj.J(`all done`)
+	time.Sleep(time.Hour)
+
+	// img.TestMovieFrame(cli.FileName)
+
+	// server.Run()
 }
 
 // Prod ...

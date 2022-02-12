@@ -9,6 +9,9 @@ import (
 	"github.com/zhengkai/zog"
 )
 
+// ErrCfg ...
+var ErrCfg *zog.Config
+
 func init() {
 
 	fmt.Println(config.StaticDir + `/log/access.txt`)
@@ -40,6 +43,7 @@ func init() {
 	errCfg.AddOutput(errFile)
 	errCfg.Color = zog.ColorWarn
 	errCfg.LinePrefix = `[Error] `
+	ErrCfg = errCfg
 
 	baseLog.CDefault = mainCfg
 	baseLog.CDebug = debugCfg

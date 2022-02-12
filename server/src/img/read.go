@@ -8,6 +8,7 @@ import (
 const colorHead = "\033[38;2;%d;%d;%d;48;2;%d;%d;%dm▄"
 const colorFront = "\033[38;2;%d;%d;%dm▄"
 const colorBack = "\033[48;2;%d;%d;%dm▄"
+const colorBackOne = "\033[48;2;%d;%d;%dm "
 const colorEnd = "\033[0m"
 const colorRight = "\033[%dC"
 

@@ -48,7 +48,7 @@ func (s *Stream) frame() {
 	f := now.Sub(s.t) / preFrame
 	// zj.J(now, f)
 
-	if f >= 6932 {
+	if f > 1799 {
 		s.stop = true
 		return
 	}
@@ -62,7 +62,7 @@ func (s *Stream) frame() {
 
 	// msg := fmt.Sprintf("%s %d\n", now, f)
 
-	filename := fmt.Sprintf(`%s/bf/%05d.bmp`, config.StaticDir, f)
+	filename := fmt.Sprintf(`%s/bf30/%04d.bmp`, config.StaticDir, f)
 	file, err := os.Open(filename)
 	if err != nil {
 		s.stop = true
@@ -72,7 +72,7 @@ func (s *Stream) frame() {
 
 	var out bytes.Buffer
 	rect := fill(file, &out)
-	h := (rect.Max.Y + 1) / 2
+	h := (rect.Max.Y - 1) / 2
 	fmt.Fprintf(&out, "\033[%dF", h)
 
 	for {
