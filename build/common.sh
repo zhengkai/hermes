@@ -1,4 +1,4 @@
-BIN="hermes-server"
+BIN="hermes"
 BUILD_PACKAGE="project/build"
 
 TYPE="${1:-dev}"
