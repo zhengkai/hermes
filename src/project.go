@@ -3,10 +3,13 @@ package project
 import (
 	"project/cli"
 	"project/config"
+	"project/zj"
 )
 
 // Start ...
 func Start() {
+
+	zj.Init()
 
 	cli.Run()
 }

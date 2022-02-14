@@ -74,7 +74,5 @@ func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 	}
 	out.Write(colorEnd)
 
-	// zj.IOF(`skip %5d %5d %5d %5d`, skip, skipB, skipF, skipOne)
-
 	return
 }

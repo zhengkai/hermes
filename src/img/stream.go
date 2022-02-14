@@ -46,7 +46,6 @@ func (s *Stream) loop() {
 func (s *Stream) frame() {
 	now := time.Now()
 	f := now.Sub(s.t) / preFrame
-	// zj.J(now, f)
 
 	if f > 1799 {
 		s.stop = true

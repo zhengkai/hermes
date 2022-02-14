@@ -8,10 +8,13 @@ import (
 	"github.com/zhengkai/zog"
 )
 
-// ErrCfg ...
-var ErrCfg *zog.Config
+// Init ...
+func Init() {
 
-func init() {
+	if config.Prod {
+		initProd()
+		return
+	}
 
 	mainFile, _ := zog.NewFile(config.StaticDir+`/log/default.txt`, false)
 	infoFile, _ := zog.NewFile(config.StaticDir+`/log/io.txt`, false)
@@ -40,7 +43,6 @@ func init() {
 	errCfg.AddOutput(errFile)
 	errCfg.Color = zog.ColorWarn
 	errCfg.LinePrefix = `[Error] `
-	ErrCfg = errCfg
 
 	baseLog.CDefault = mainCfg
 	baseLog.CDebug = debugCfg

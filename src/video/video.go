@@ -67,7 +67,6 @@ func (v *Video) exec(file string, width, height int) {
 	)
 	cmd.Stdin = &v.stdin
 	cmd.Stdout = v
-	// cmd.Stderr = zj.ErrCfg
 
 	v.cmd = cmd
 	v.ch = make(chan *Frame, 1)
