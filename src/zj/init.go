@@ -1,7 +1,6 @@
 package zj
 
 import (
-	"fmt"
 	"io"
 	"path/filepath"
 	"project/config"
@@ -13,8 +12,6 @@ import (
 var ErrCfg *zog.Config
 
 func init() {
-
-	fmt.Println(config.StaticDir + `/log/access.txt`)
 
 	mainFile, _ := zog.NewFile(config.StaticDir+`/log/default.txt`, false)
 	infoFile, _ := zog.NewFile(config.StaticDir+`/log/io.txt`, false)

@@ -1,0 +1,9 @@
+Hermes
+
+    A tool for converting videos to ANSI color output, by ffmpeg
+
+    Writen by Zheng Kai, https://github.com/zhengkai/hermes
+                         MIT License
+
+usage:
+  %s [-s 80x40] video_filename

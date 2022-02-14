@@ -1,6 +1,7 @@
 package cli
 
 import (
+	_ "embed" //
 	"flag"
 	"fmt"
 	"os"
@@ -11,15 +12,21 @@ import (
 	"github.com/zhengkai/zu"
 )
 
+//go:embed help.txt
+var helpText string
+
 // Init ...
 func Init() {
 
+	flag.CommandLine.SetOutput(os.Stderr)
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "usage:\n\n  %s [-s 80x40] video_filename\n\n", filepath.Base(os.Args[0]))
+		fmt.Fprintf(os.Stderr, helpText, filepath.Base(os.Args[0]))
+		os.Stderr.WriteString("\n\n")
 		flag.PrintDefaults()
 	}
 
 	flag.StringVar(&Size, `s`, ``, "Output size, example: \"80x40\"\nnote: one character can display two pixels height")
+	flag.BoolVar(&Verbose, `v`, false, "print verbose information")
 
 	flag.Parse()
 

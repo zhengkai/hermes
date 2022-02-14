@@ -2,6 +2,7 @@ package video
 
 import (
 	"bytes"
+	"encoding/binary"
 	"fmt"
 	"os/exec"
 	"time"
@@ -12,21 +13,31 @@ type Video struct {
 	cmd         *exec.Cmd
 	ch          chan *Frame
 	stdin       bytes.Buffer
-	interval    time.Duration
+	time        time.Time
 	frameSerial int
 	skip        int
+	pipe        bytes.Buffer
+	filesize    int
 }
 
 // receive ffmpeg pipe
 func (v *Video) Write(p []byte) (n int, err error) {
 
 	n = len(p)
-	// zj.J(`write`, v.frameSerial, len(p), v.interval)
+
+	if v.chunkWrite(&p, n) {
+		return
+	}
 
 	f := &Frame{
 		Serial: v.frameSerial,
 		Data:   p,
 		Skip:   v.skip,
+	}
+	if v.frameSerial == 0 {
+		v.time = time.Now()
+	} else {
+		f.Duration = time.Now().Sub(v.time)
 	}
 	v.frameSerial++
 
@@ -41,18 +52,17 @@ func (v *Video) Write(p []byte) (n int, err error) {
 
 func (v *Video) exec(file string, width, height int) {
 
+	vf := fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height)
+
 	cmd := exec.Command(
 		`ffmpeg`,
 		`-i`,
 		file,
 		// `-vframes`, // 只生成前 n 帧，开发用
-		// `10`,
-		`-vf`,
-		fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height),
-		`-vcodec`,
-		`bmp`,
-		`-f`,
-		`image2pipe`,
+		// `300`,
+		`-vf`, vf,
+		`-vcodec`, `bmp`,
+		`-f`, `image2pipe`,
 		`pipe:1`,
 	)
 	cmd.Stdin = &v.stdin
@@ -61,14 +71,42 @@ func (v *Video) exec(file string, width, height int) {
 
 	v.cmd = cmd
 	v.ch = make(chan *Frame, 1)
-	v.interval = time.Second / 60
 
 	go func() {
 		cmd.Start()
 		cmd.Wait()
-		time.Sleep(time.Second)
 		close(v.ch)
 	}()
+}
+
+// 如果单张 bmp 文件大于上限、需要多次写入（我不知道 32K 是 pipeline 还是 ffmpeg 的上限）
+func (v *Video) chunkWrite(p *[]byte, size int) (chunk bool) {
+
+	ab := *p
+
+	if v.filesize == 0 {
+		fsize := int(binary.LittleEndian.Uint32(ab[2:6]))
+		if fsize == size {
+			return
+		}
+		v.filesize = fsize
+	}
+
+	v.pipe.Write(ab)
+	if v.pipe.Len() < v.filesize {
+		chunk = true
+		return
+	}
+
+	if v.pipe.Len() == v.filesize {
+		ab = v.pipe.Bytes()
+		v.pipe.Reset()
+	} else {
+		ab = v.pipe.Next(v.filesize)
+	}
+	*p = ab
+	v.filesize = 0
+	return
 }
 
 // Frame ...

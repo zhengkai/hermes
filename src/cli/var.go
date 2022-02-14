@@ -4,6 +4,7 @@ package cli
 var (
 	FileName string
 	Size     string
+	Verbose  bool
 
 	sizeW   int64
 	sizeH   int64
