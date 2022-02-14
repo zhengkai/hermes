@@ -10,8 +10,4 @@ TARGET="hermes_${1}.tgz"
 
 mv hermes-next hermes
 
-if [ -f "$TARGET" ]; then
-	rm "$TARGET" || :
-fi
-
 tar zcvf "$TARGET" hermes

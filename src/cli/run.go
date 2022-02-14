@@ -13,18 +13,16 @@ import (
 // Run ...
 func Run() {
 
-	Init()
+	flagInit()
 
 	run()
 }
 
 func run() {
 
-	var w, h int
-	if sizeSet {
-		w = int(sizeW)
-		h = int(sizeH)
-	} else {
+	w := sizeW
+	h := sizeH
+	if !sizeSet {
 		w, h, _ = term.GetSize(0)
 		if Verbose {
 			h--

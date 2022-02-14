@@ -6,7 +6,14 @@ var (
 	Size     string
 	Verbose  bool
 
-	sizeW   int64
-	sizeH   int64
+	sizeW   int
+	sizeH   int
 	sizeSet bool
+)
+
+const (
+	exitFilename = iota + 1
+	exitFlag
+	exitSize
+	exitFFmpeg
 )
