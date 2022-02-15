@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 
 build: git
-	sudo docker build -t hermes -f Dockerfile ../..
+	sudo docker build -t hermes -f Dockerfile ..
 
 run: build
 	sudo docker run \
@@ -16,7 +16,7 @@ install: build
 	ssh jack "chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh"
 
 git:
-	../../server/build/git-hash.sh > ../../server/build/.git-hash
+	../build/git-hash.sh > ../build/.git-hash
 
 clean:
 	sudo docker stop hermes || :

@@ -18,6 +18,10 @@ release:
 	GOOS=darwin GOARCH=amd64 ./build/build-server.sh release
 	./build/pack.sh mac_amd64
 
+prod:
+	./build/build-server.sh prod
+	sudo cp ./dist/prod/hermes /usr/local/bin/
+
 start:
 	./build/run-server.sh $(type)
 
