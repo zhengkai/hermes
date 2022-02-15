@@ -2,6 +2,8 @@
 
 命令行下预览视频文件的工具
 
+![screenshot](/static/screenshot.webp)
+
 [演示地址](https://www.youtube.com/watch?v=g7OHCnZ9fbk)
 
 ## 安装
@@ -25,3 +27,4 @@
 * docker
 * telnet server
 * 对比前后帧，优化输出流量
+* output as nodejs/shell script
