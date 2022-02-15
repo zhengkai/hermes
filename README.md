@@ -28,3 +28,4 @@
 * telnet server
 * 对比前后帧，优化输出流量
 * output as nodejs/shell script
+* 目前是通过管道方式获取每帧的 BMP 文件并转成 ANSI color，而且一阻塞就会丢帧，如果有更底层的方式就可以做成有快进/后退/暂停的完善播放器了
