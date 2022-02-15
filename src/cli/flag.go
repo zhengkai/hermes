@@ -36,8 +36,9 @@ func flagInit() {
 	}
 
 	flag.StringVar(&Size, `size`, defaultSize, "Output size, example: \"80x40\"\nnote: one character can display two pixels height")
-	flag.BoolVar(&Verbose, `verbose`, false, "print verbose information")
-	flag.BoolVar(&Version, `version`, false, "print version")
+	flag.IntVar(&FirstFrames, `frames`, 0, "Show first N frames only")
+	flag.BoolVar(&Verbose, `verbose`, false, "Print verbose information")
+	flag.BoolVar(&Version, `version`, false, "Print version")
 
 	flag.Parse()
 

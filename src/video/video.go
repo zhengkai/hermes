@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os/exec"
+	"strconv"
 	"time"
 )
 
@@ -50,21 +51,30 @@ func (v *Video) Write(p []byte) (n int, err error) {
 	return
 }
 
-func (v *Video) exec(file string, width, height int) {
+func (v *Video) exec(file string, width, height, firstFrames int) {
 
 	vf := fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height)
 
-	cmd := exec.Command(
-		`ffmpeg`,
+	arg := []string{
 		`-i`,
 		file,
-		// `-vframes`, // 只生成前 n 帧，开发用
-		// `300`,
+	}
+	if firstFrames > 0 { // 只生成前 n 帧
+		arg = append(arg,
+			`-vframes`,
+			strconv.Itoa(firstFrames),
+		)
+	}
+
+	arg = append(arg,
 		`-vf`, vf,
 		`-vcodec`, `bmp`,
 		`-f`, `image2pipe`,
 		`pipe:1`,
 	)
+
+	cmd := exec.Command(`ffmpeg`, arg...)
+
 	cmd.Stdin = &v.stdin
 	cmd.Stdout = v
 

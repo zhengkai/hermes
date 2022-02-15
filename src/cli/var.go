@@ -7,6 +7,8 @@ var (
 	Verbose  bool
 	Version  bool
 
+	FirstFrames int
+
 	sizeW   int
 	sizeH   int
 	sizeSet bool

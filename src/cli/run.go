@@ -30,7 +30,7 @@ func run() {
 		h *= 2
 	}
 
-	v := video.Play(FileName, w, h)
+	v := video.Play(FileName, w, h, FirstFrames)
 
 	var buf *bytes.Buffer
 
