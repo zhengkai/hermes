@@ -52,11 +52,17 @@ func verboseLine(f *video.Frame, rect image.Rectangle, ansiLen int) {
 }
 
 func verboseSummary() {
+
+	if frameCount <= 1 {
+		return
+	}
+
 	p := message.NewPrinter(language.English)
 
 	bps := float64(ansiLenSum) / (float64(lastDur) / float64(time.Second))
 
 	p.Fprintf(os.Stderr, "total output: %d\n", ansiLenSum)
+
 	p.Fprintf(os.Stderr, "   pre frame: %d\n", ansiLenSum/frameCount)
 	p.Fprintf(os.Stderr, "  pre second: %d\n", int(bps))
 }

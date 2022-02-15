@@ -1,6 +1,4 @@
-Hermes
-
-    A tool for converting videos to ANSI color output, by ffmpeg
+    A tool for converting images/video to ANSI color output, by ffmpeg
 
     Writen by Zheng Kai, https://github.com/zhengkai/hermes
                          MIT License

@@ -19,6 +19,11 @@ func flagInit() {
 
 	flag.CommandLine.SetOutput(os.Stderr)
 	flag.Usage = func() {
+		name := `Hermes`
+		if build.BuildGit != `` {
+			name += ` ` + build.BuildGit
+		}
+		fmt.Fprint(os.Stderr, name, "\n\n")
 		fmt.Fprintf(os.Stderr, helpText, filepath.Base(os.Args[0]))
 		os.Stderr.WriteString("\n\n")
 		flag.PrintDefaults()

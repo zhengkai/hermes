@@ -61,7 +61,11 @@ func run() {
 			if Verbose {
 				h++
 			}
-			fmt.Fprintf(os.Stdout, "\033[%dF", h)
+			if h == 0 {
+				fmt.Fprint(os.Stdout, "\033[0G")
+			} else {
+				fmt.Fprintf(os.Stdout, "\033[%dF", h)
+			}
 		}
 		if Verbose {
 			verboseLine(f, rect, buf.Len())
@@ -76,8 +80,8 @@ func run() {
 		}
 	}
 
+	fmt.Println("\033[0m")
 	if isClose {
-		fmt.Println("\033[0m")
 		if closeSignal == os.Interrupt {
 			os.Stderr.WriteString("Ctrl+C pressed in Terminal\n")
 		} else {

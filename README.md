@@ -1,6 +1,6 @@
 # Hermes
 
-命令行下预览视频文件的工具
+借助 [FFmpeg](https://www.ffmpeg.org/) 在命令行下预览图片/视频的工具
 
 ![screenshot](/static/screenshot.webp)
 

@@ -27,8 +27,8 @@ func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 
 		for x := rect.Min.X; x < rect.Max.X; x++ {
 
-			b := im.At(x, y).(color.RGBA)
-			f := im.At(x, y+1).(color.RGBA)
+			b := getPixel(im, x, y)
+			f := getPixel(im, x, y+1)
 
 			if prevB == b {
 
@@ -73,6 +73,26 @@ func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 		}
 	}
 	out.Write(colorEnd)
+
+	return
+}
+
+func getPixel(im image.Image, x, y int) (p color.RGBA) {
+
+	v := im.At(x, y)
+	switch c := v.(type) {
+	case color.RGBA:
+		p = c
+	case color.NRGBA:
+		p = color.RGBA{c.R, c.G, c.B, c.A}
+	case color.Gray:
+		p = color.RGBA{c.Y, c.Y, c.Y, 0}
+	case color.Alpha:
+		p = color.RGBA{c.A, c.A, c.A, 0}
+	default:
+		r, g, b, a := v.RGBA()
+		p = color.RGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
+	}
 
 	return
 }
