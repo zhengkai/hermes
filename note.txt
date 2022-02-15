@@ -1,1 +1,0 @@
-ffmpeg -i 1486611676464300032.mp4 -ss 4 -vframes 1 -vf "scale=w=120:h=80:force_original_aspect_ratio=decrease" -vcodec bmp -f image2pipe pipe:1 > /tmp/2.bmp

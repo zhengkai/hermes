@@ -18,7 +18,7 @@ var lastDur time.Duration
 func verboseLine(f *video.Frame, rect image.Rectangle, ansiLen int) {
 	t := time.Unix(0, 0).UTC()
 	dur := t.Add(f.Duration).Format(`15:04:05.000`)
-	lastDur += f.Duration
+	lastDur = f.Duration
 	var fps float64
 	if f.Duration > 0 {
 		fps = float64(time.Second) * float64(f.Serial-f.Skip) / float64(f.Duration)
