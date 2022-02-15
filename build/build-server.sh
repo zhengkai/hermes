@@ -11,7 +11,7 @@ fi
 
 DATE=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
 GO_VERSION=$(go version)
-GIT_VERSION=$(./git-hash.sh)
+GIT_VERSION=$(git describe --dirty || :)
 if [ "$DOCKER_RUNNING" == "yes" ] && [ -f .git-hash ]; then
 	GIT_VERSION=$(cat .git-hash || :)
 	HOSTNAME="docker"

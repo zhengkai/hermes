@@ -16,7 +16,7 @@ install: build
 	ssh jack "chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh"
 
 git:
-	../build/git-hash.sh > ../build/.git-hash
+	git describe --dirty > ../build/.git-hash
 
 clean:
 	sudo docker stop hermes || :

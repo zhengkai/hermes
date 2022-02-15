@@ -5,6 +5,7 @@ var (
 	FileName string
 	Size     string
 	Verbose  bool
+	Version  bool
 
 	sizeW   int
 	sizeH   int

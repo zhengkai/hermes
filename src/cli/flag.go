@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"project/build"
 
 	"github.com/zhengkai/zu"
 )
@@ -31,8 +32,14 @@ func flagInit() {
 
 	flag.StringVar(&Size, `size`, defaultSize, "Output size, example: \"80x40\"\nnote: one character can display two pixels height")
 	flag.BoolVar(&Verbose, `verbose`, false, "print verbose information")
+	flag.BoolVar(&Version, `version`, false, "print version")
 
 	flag.Parse()
+
+	if Version {
+		build.Ver()
+		os.Exit(0)
+	}
 
 	a := flag.Args()
 	if len(a) > 0 {
