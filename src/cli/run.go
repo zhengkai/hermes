@@ -30,7 +30,17 @@ func run() {
 		h *= 2
 	}
 
-	v := video.Play(FileName, w, h, FirstFrames)
+	if Verbose {
+		if FirstFrames > 0 {
+			fmt.Fprintln(os.Stderr, `-frames`, FirstFrames)
+		}
+		fmt.Fprintf(os.Stderr, "-size %dx%d\n", w, h)
+		if finalSeek != `` {
+			fmt.Fprintln(os.Stderr, `-seek`, finalSeek)
+		}
+	}
+
+	v := video.Play(FileName, w, h, FirstFrames, finalSeek)
 
 	var buf *bytes.Buffer
 

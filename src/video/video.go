@@ -51,14 +51,22 @@ func (v *Video) Write(p []byte) (n int, err error) {
 	return
 }
 
-func (v *Video) exec(file string, width, height, firstFrames int) {
+func (v *Video) exec(file string, width, height, firstFrames int, seek string) {
 
 	vf := fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height)
 
-	arg := []string{
+	var arg []string
+
+	if seek != `` {
+		arg = append(arg,
+			`-ss`,
+			seek,
+		)
+	}
+	arg = append(arg,
 		`-i`,
 		file,
-	}
+	)
 	if firstFrames > 0 { // 只生成前 n 帧
 		arg = append(arg,
 			`-vframes`,

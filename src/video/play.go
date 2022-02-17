@@ -1,7 +1,7 @@
 package video
 
 // Play ...
-func Play(file string, width, height, firstFrames int) (v *Video) {
+func Play(file string, width, height, firstFrames int, seek string) (v *Video) {
 
 	if width < 1 {
 		width = 1
@@ -11,7 +11,7 @@ func Play(file string, width, height, firstFrames int) (v *Video) {
 	}
 
 	v = &Video{}
-	v.exec(file, width, height, firstFrames)
+	v.exec(file, width, height, firstFrames, seek)
 
 	return v
 }

@@ -39,6 +39,7 @@ func flagInit() {
 	flag.IntVar(&FirstFrames, `frames`, 0, "Show first N frames only")
 	flag.BoolVar(&Verbose, `verbose`, false, "Print verbose information")
 	flag.BoolVar(&Version, `version`, false, "Print version")
+	flag.StringVar(&Seek, `seek`, ``, `Seek to the closest seek point before position, like "-ss" in ffmpeg`)
 
 	flag.Parse()
 
@@ -64,8 +65,14 @@ func flagInit() {
 	if Size != `` {
 		sizeW, sizeH, sizeSet = parseSize(Size)
 		if !sizeSet {
-			fmt.Fprintf(os.Stderr, "size \"%s\" illegal\n", Size)
+			fmt.Fprintf(os.Stderr, "invalid size \"%s\"\n", Size)
 			os.Exit(exitSize)
 		}
+	}
+
+	finalSeek, ok = parseSeek(Seek)
+	if !ok {
+		fmt.Fprintf(os.Stderr, "invalid seek \"%s\"\n", Seek)
+		os.Exit(exitSize)
 	}
 }

@@ -2,10 +2,12 @@ package cli
 
 // var
 var (
-	FileName string
-	Size     string
-	Verbose  bool
-	Version  bool
+	FileName  string
+	Size      string
+	Verbose   bool
+	Version   bool
+	Seek      string
+	finalSeek string
 
 	FirstFrames int
 
@@ -19,4 +21,5 @@ const (
 	exitFlag
 	exitSize
 	exitFFmpeg
+	exitSeek
 )

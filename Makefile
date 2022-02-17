@@ -6,10 +6,10 @@ play:
 	./build/build-server.sh $(type)
 	mv ./dist/dev/hermes-next ./dist/dev/hermes
 	./dist/dev/hermes || :
-	./dist/dev/hermes -version
-	./dist/dev/hermes -verbose -size 2x2 ./static/screenshot.webp
-	./dist/dev/hermes -size 2x2 ./static/screenshot.webp
-	./dist/dev/hermes -size 10x10 -verbose -frames 100 ./static/forza5.mp4
+	# ./dist/dev/hermes -version
+	# ./dist/dev/hermes -verbose -size 2x2 ./static/screenshot.webp
+	# ./dist/dev/hermes -size 2x2 ./static/screenshot.webp
+	./dist/dev/hermes -size 10x10 -seek 80 -verbose -frames 100 ./static/forza5.mp4
 	# ./dist/dev/hermes -size 16x16 -verbose ./static/1489962262890565646.mp4
 
 release:

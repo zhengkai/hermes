@@ -4,4 +4,4 @@
                          MIT License
 
 usage:
-  %s [-s 80x40] video_filename
+  %s [-size 80x40] [-frames 1] [-seek 00:01:23.456] video_filename
