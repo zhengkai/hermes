@@ -2,42 +2,14 @@ package video
 
 import (
 	"bytes"
-	"fmt"
 	"os/exec"
-	"strconv"
 )
 
 func (v *Video) exec(file string, width, height, firstFrames int, seek string) {
 
-	vf := fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height)
+	args := makeArgs(file, width, height, firstFrames, seek)
 
-	var arg []string
-
-	if seek != `` {
-		arg = append(arg,
-			`-ss`,
-			seek,
-		)
-	}
-	arg = append(arg,
-		`-i`,
-		file,
-	)
-	if firstFrames > 0 { // 只生成前 n 帧
-		arg = append(arg,
-			`-vframes`,
-			strconv.Itoa(firstFrames),
-		)
-	}
-
-	arg = append(arg,
-		`-vf`, vf,
-		`-vcodec`, `bmp`,
-		`-f`, `image2pipe`,
-		`pipe:1`,
-	)
-
-	cmd := exec.Command(`ffmpeg`, arg...)
+	cmd := exec.Command(`ffmpeg`, args...)
 
 	cmd.Stdin = &v.stdin
 	cmd.Stdout = v
