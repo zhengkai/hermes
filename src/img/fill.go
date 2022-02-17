@@ -20,11 +20,10 @@ func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 
 	rect = im.Bounds()
 
-	var prevB, prevF color.RGBA
-
 	var skip, skipF, skipB, skipOne int
 	for y := rect.Min.Y; y < rect.Max.Y; y += 2 {
 
+		var prevB, prevF color.RGBA
 		for x := rect.Min.X; x < rect.Max.X; x++ {
 
 			b := getPixel(im, x, y)
@@ -71,8 +70,8 @@ func Fill(in io.Reader, out io.Writer) (rect image.Rectangle) {
 		if y+2 < rect.Max.Y {
 			out.Write(colorBR)
 		}
+		out.Write(colorEnd)
 	}
-	out.Write(colorEnd)
 
 	return
 }
