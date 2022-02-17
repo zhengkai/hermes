@@ -8,7 +8,7 @@
 
 ## 安装
 
-[最新版本下载](https://github.com/zhengkai/hermes/releases/tag/v1.0.1)，请选择对应平台
+[最新版本下载](https://github.com/zhengkai/hermes/releases/tag/v1.0.2)，请选择对应平台
 
 本工具基于 [FFmpeg](https://www.ffmpeg.org/download.html)，请确保已安装、命令行下输 `ffmpeg` 可以看到一堆版本信息。
 
