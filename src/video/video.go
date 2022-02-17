@@ -3,9 +3,7 @@ package video
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 	"os/exec"
-	"strconv"
 	"time"
 )
 
@@ -19,6 +17,7 @@ type Video struct {
 	skip        int
 	pipe        bytes.Buffer
 	filesize    int
+	Err         error
 }
 
 // receive ffmpeg pipe
@@ -49,51 +48,6 @@ func (v *Video) Write(p []byte) (n int, err error) {
 	}
 
 	return
-}
-
-func (v *Video) exec(file string, width, height, firstFrames int, seek string) {
-
-	vf := fmt.Sprintf(`scale=w=%d:h=%d:force_original_aspect_ratio=decrease,realtime`, width, height)
-
-	var arg []string
-
-	if seek != `` {
-		arg = append(arg,
-			`-ss`,
-			seek,
-		)
-	}
-	arg = append(arg,
-		`-i`,
-		file,
-	)
-	if firstFrames > 0 { // 只生成前 n 帧
-		arg = append(arg,
-			`-vframes`,
-			strconv.Itoa(firstFrames),
-		)
-	}
-
-	arg = append(arg,
-		`-vf`, vf,
-		`-vcodec`, `bmp`,
-		`-f`, `image2pipe`,
-		`pipe:1`,
-	)
-
-	cmd := exec.Command(`ffmpeg`, arg...)
-
-	cmd.Stdin = &v.stdin
-	cmd.Stdout = v
-
-	v.cmd = cmd
-	v.ch = make(chan *Frame, 1)
-
-	go func() {
-		cmd.Start()
-		cmd.Wait()
-		close(v.ch)
-	}()
 }
 
 // 如果单张 bmp 文件大于上限、需要多次写入（我不知道 32K 是 pipeline 还是 ffmpeg 的上限）

@@ -90,7 +90,12 @@ func run() {
 		}
 	}
 
-	fmt.Println("\033[0m")
+	if !first {
+		fmt.Println("\033[0m")
+	}
+
+	fmt.Fprintln(os.Stderr, v.Err)
+
 	if isClose {
 		if closeSignal == os.Interrupt {
 			os.Stderr.WriteString("Ctrl+C pressed in Terminal\n")
